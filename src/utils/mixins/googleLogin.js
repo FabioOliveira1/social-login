@@ -28,9 +28,9 @@ export default {
     },
     initGoogleClient() {
       gapi.client.init({
-          apiKey: 'AIzaSyDPZgZbVzi0aPcOGdBINOmp2Vq8ajETwuQ',
+          apiKey: process.env.VUE_APP_GOOGLE_KEY,
           discoveryDocs: ['https://people.googleapis.com/$discovery/rest?version=v1'],
-          clientId: '111587818044-q9oifhbkeegjmceqsbd9eu5o4tn347m9.apps.googleusercontent.com',
+          clientId: process.env.VUE_APP_GOOGLE_ID,
           scope: 'profile'
       }).then(() => {
         gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateGoogleSigninStatus)
@@ -48,6 +48,8 @@ export default {
     },
     handleGoogleSignOutClick () {
       gapi.auth2.getAuthInstance().signOut()
+      this.google.name = null
+      this.google.emails = null
     },
     makeGoogleApiCall () {
       gapi.client.people.people.get({

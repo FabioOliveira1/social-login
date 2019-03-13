@@ -17,10 +17,10 @@ export default {
     initFacebook () {
       window.fbAsyncInit = () => {
         FB.init({
-          appId: process.env.VUE_APP_ID,
+          appId: process.env.VUE_APP_FACEBOOK_ID,
           cookie: true,
           xfbml: true,
-          version: process.env.VUE_APP_VERSION
+          version: process.env.VUE_APP_FACEBOOK_VERSION
         });
 
         this.checkFacebookLoginState()
@@ -44,7 +44,7 @@ export default {
         console.log('response', response)
         this.facebook.token = response.authResponse.accessToken
         this.facebook.uid = response.authResponse.userID
-        this.facebook.getFacebookUserData()
+        this.getFacebookUserData()
       } else {
         console.log('The person is not logged into your app or we are unable to tell.');
         this.facebook.email = null
