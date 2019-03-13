@@ -41,21 +41,23 @@ export default {
     },
     handleFacebookLoginStatus (response) {
       if (response.status === "connected") {
-        this.token = response.authResponse.accessToken
-        this.uid = response.authResponse.userID
-        this.getFacebookUserData()
+        console.log('response', response)
+        this.facebook.token = response.authResponse.accessToken
+        this.facebook.uid = response.authResponse.userID
+        this.facebook.getFacebookUserData()
       } else {
         console.log('The person is not logged into your app or we are unable to tell.');
-        this.email = null
-        this.name = null
-        this.token = null
-        this.uid = null
+        this.facebook.email = null
+        this.facebook.name = null
+        this.facebook.token = null
+        this.facebook.uid = null
       }
     },
     getFacebookUserData() {
       FB.api(`/${this.uid}?fields=name,email&accessToken=${this.token}`, response => {
-        this.email = response.email
-        this.name = response.name
+        console.log('response intimal', response)
+        this.facebook.email = response.email
+        this.facebook.name = response.name
       });
     }
   }
