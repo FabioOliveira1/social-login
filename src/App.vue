@@ -37,8 +37,8 @@
       </table>
 
       <!-- Google Login Button -->
-      <button class="btn" id="signin-button" @click="handleGoogleSignInClick">Sign In</button>
-      <button class="btn" id="signout-button" @click="handleGoogleSignOutClick">Sign Out</button>
+      <button class="btn" id="signout-button" @click="handleGoogleSignOutClick" v-if="google.name">Sign Out</button>
+      <button class="btn" id="signin-button" @click="handleGoogleSignInClick" v-else>Sign In</button>
 
       <!-- Google User Info -->
       <table>
@@ -99,6 +99,10 @@ html {
 
 table {
   margin: 15px;
+}
+
+table td {
+  max-width: 200px;
 }
 
 table td:first-child {
