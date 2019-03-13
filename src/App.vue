@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <main class="container">
+      <!-- Facebook Login Button -->
       <div id="fb-root"></div>
       <div
         class="fb-login-button"
@@ -10,26 +11,73 @@
         data-use-continue-as="true"
         scope="public_profile,email"
       ></div>
-      <!-- <button class="btn" @click.prevent="getUserData" >Button</button> -->
-      <p class="status">{{this.name}}</p>
-      <p class="status">{{this.email}}</p>
-      <p class="status">{{this.uid}}</p>
-      <p class="status">{{this.token}}</p>
+      <!-- Facebook User Info -->
+      <table>
+        <thead>
+          <th colspan="2">Facebook Data</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nome: </td>
+            <td>{{ this.facebook.name || 'Sem informação' }}</td>
+          </tr>
+          <tr>
+            <td>Email: </td>
+            <td>{{ this.facebook.email || 'Sem informação' }}</td>
+          </tr>
+          <tr>
+            <td>User ID: </td>
+            <td>{{ this.facebook.uid || 'Sem informação' }}</td>
+          </tr>
+          <tr>
+            <td>Acces Token: </td>
+            <td>{{ this.facebook.token || 'Sem informação' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Google Login Button -->
+      <button class="btn" id="signin-button" @click="handleGoogleSignInClick">Sign In</button>
+      <button class="btn" id="signout-button" @click="handleGoogleSignOutClick">Sign Out</button>
+
+      <!-- Google User Info -->
+      <table>
+        <thead>
+          <th colspan="2">Google Data</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nome: </td>
+            <td>{{ this.google.name || 'Sem informação' }}</td>
+          </tr>
+          <tr>
+            <td>Emails: </td>
+            <td>{{ this.google.emails.join(', ') || 'Sem informação' }}</td>
+          </tr>
+        </tbody>
+      </table>
     </main>
   </div>
 </template>
 
 <script>
 import FacebookLogin from '@/utils/mixins/facebookLogin'
+import GoogleLogin from '@/utils/mixins/googleLogin'
 
 export default {
-  mixins: [ FacebookLogin ],
+  mixins: [ FacebookLogin, GoogleLogin ],
   data () {
     return {
-      name: null,
-      email: null,
-      uid: null,
-      token: null
+      facebook: {
+        name: null,
+        email: null,
+        uid: null,
+        token: null
+      },
+      google: {
+        name: null,
+        emails: []
+      }
     }
   }
 }
@@ -47,6 +95,14 @@ html {
   justify-content: center;
   align-items: center;
   flex-flow: column;
+}
+
+table {
+  margin: 15px;
+}
+
+table td:first-child {
+  font-weight: bold;
 }
 
 .btn {
